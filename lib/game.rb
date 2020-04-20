@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Here the game is initiated and instructions are shown. 
 # Majority of work takes place inside board.rb.
 
@@ -51,7 +52,7 @@ def game_loop
     
     break if gets.chomp[0].upcase == 'N'
   end
-  puts "GAME ENDED"
+  puts 'GAME ENDED'
 end
 pre_game
 game_loop

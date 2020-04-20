@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'player'
 require 'pry'
 
@@ -7,12 +9,14 @@ MARKER_2 = '◍ '
 ROWS = 6
 COLUMNS = 7
 
+# All the actions happening on the board takes place here. 
+
 class Board
 
   attr_accessor :positions, :choices, :turn_number, :player1, :player2
 
   def initialize(name1, name2)
-    @positions = Array.new(ROWS) { Array.new(COLUMNS, EMPTY) } # First value is row, second is column. 
+    @positions = Array.new(ROWS) { Array.new(COLUMNS, EMPTY) }
     @choices = [0, 1, 2, 3, 4, 5, 6]
     @turn_number = 0
     @player1 = Player.new(name1, MARKER_1)
@@ -20,12 +24,13 @@ class Board
   end
 
   def play
-    while !check_win && @turn_number < 42
-      take_turn 
-      puts turn_number
-    end
+    take_turn while !check_win && @turn_number < 42
     to_s
-    if check_win == true
+    win_or_draw_message
+  end
+
+  def win_or_draw_message
+    if check_win
       puts "\nGAME WON by #{find_current_player.name.upcase}"
     else
       puts "\nA DRAW between #{@player1.name} and #{@player2.name}"
@@ -39,7 +44,7 @@ class Board
     choice = player.make_choice(@choices)
     put_marker(choice, player)
   end
-  
+
   def find_current_player
     @turn_number.odd? ? @player1 : @player2
   end
@@ -53,10 +58,7 @@ class Board
   end
 
   def check_win
-    return true if horizontal_win?
-    return true if vertical_win?
-
-    true if diagonal_win?
+    true if diagonal_win? || horizontal_win? || vertical_win?
   end
 
   def horizontal_win?
@@ -129,10 +131,3 @@ class Board
     print " 0 1 2 3 4 5 6\n"
   end
 end
-board = Board.new('a', 'b')
-board.positions[4][2]
-board.positions[3][2]
-board.positions[2][2]
-board.positions[1][2]
-print board.horizontal_win?
-
