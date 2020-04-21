@@ -146,10 +146,3 @@ class Board
     puts
   end
 end
-board = Board.new('henrik', 'alio')
-board.positions[2][3] = "x "
-board.positions[3][2] = "x "
-board.positions[4][1] = "x "
-board.positions[5][0] = "x "
-board.to_s
-print board.diagonal_win?

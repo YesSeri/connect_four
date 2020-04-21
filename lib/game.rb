@@ -49,8 +49,8 @@ def game_loop
   loop do
     start_game
     puts "\nPlay again?"
-    
     break if gets.chomp[0].upcase == 'N'
+
   end
   puts 'GAME ENDED'
 end
