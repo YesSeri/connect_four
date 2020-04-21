@@ -68,11 +68,18 @@ describe 'Board' do
       board.positions[3][5] = "x"
       expect(board.vertical_win?).to eq(true)
     end
-    it "#diagonal win" do
+    it "#diagonal right win" do
       board.positions[1][1] = "x"
       board.positions[2][2] = "x"
       board.positions[3][3] = "x"
       board.positions[4][4] = "x"
+      expect(board.diagonal_win?).to eq(true)
+    end
+    it "#diagonal win" do
+      board.positions[2][3] = "x"
+      board.positions[3][2] = "x"
+      board.positions[4][1] = "x"
+      board.positions[5][0] = "x"
       expect(board.diagonal_win?).to eq(true)
     end
   end

@@ -103,13 +103,18 @@ class Board
   def diagonal_win?
     (0..3).each do |column|
       (0..2).each do |row|
-        return true if diagonal_row_win?(row, column)
+        return true if down_right_win?(row, column)
+      end
+    end
+    (3..6).each do |column|
+      (0..2).each do |row|
+        return true if down_left_win?(row, column)
       end
     end
     false
   end
 
-  def diagonal_row_win?(row, column)
+  def down_right_win?(row, column)
     return false if @positions[row][column] == EMPTY
 
     values_to_check = []
@@ -118,8 +123,17 @@ class Board
     end
     values_to_check.uniq.count == 1
   end
+  def down_left_win?(row, column)
+    return false if @positions[row][column] == EMPTY
 
+    values_to_check = []
+    (0..3).each do |i|
+      values_to_check << @positions[row + i][column - i]
+    end
+    values_to_check.uniq.count == 1
+  end
   def to_s
+    puts
     @positions.each do |a|
       print '|'
       a.each do |b|
@@ -129,5 +143,13 @@ class Board
       puts
     end
     print " 0 1 2 3 4 5 6\n"
+    puts
   end
 end
+board = Board.new('henrik', 'alio')
+board.positions[2][3] = "x "
+board.positions[3][2] = "x "
+board.positions[4][1] = "x "
+board.positions[5][0] = "x "
+board.to_s
+print board.diagonal_win?
